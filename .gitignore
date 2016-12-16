@@ -1,3 +1,6 @@
 dock-app-web/target/
 dock-app-ejb/target/
 dock-app/target/
+.DS_Store
+image/glassfish-4.1.1-web.zip
+image/jre-8u112-linux-x64.tar.gz

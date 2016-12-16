@@ -33,7 +33,7 @@ RUN /etc/init.d/mysql start && \
 
 
 # Install Glassfish
-#ENV GLASSFISH=glassfish-4.1.1.zip
+#ENV GLASSFISH=glassfish-4.1.1-web.zip
 #COPY $GLASSFISH /opt
 #RUN cd /opt && \
 #  unzip $GLASSFISH && \
