@@ -4,6 +4,18 @@ FROM debian:latest
 MAINTAINER Rob Benton <rob.benton@arcourts.gov>
 
 
+# Set passwords first so apt will not prompt for them.
+RUN echo "mysql-server-5.5 mysql-server/root_password password root" | debconf-set-selections && \
+  echo "mysql-server-5.5 mysql-server/root_password_again password root" | debconf-set-selections
+
+
+# Install needed apps, tools, and utilities
+# 
+RUN apt-get update && apt-get install -y \
+  mysql-server-5.5 \
+  unzip
+
+
 # Install the JRE.
 # 
 ENV JRE=jre-8u112-linux-x64.tar.gz
@@ -13,13 +25,22 @@ RUN cd /usr/local/java && \
   tar zxvf $JRE && \
   rm $JRE
 
-# Install MySQL
+
+# Install Glassfish
 #
-# Set passwords first so apt will not prompt for them.
-RUN echo "mysql-server-5.5 mysql-server/root_password password root" | debconf-set-selections
-RUN echo "mysql-server-5.5 mysql-server/root_password_again password root" | debconf-set-selections
-# Install the server
-RUN apt-get update && apt-get install -y mysql-server-5.5
+# We replace the jboss-logging.jar included with glassfish to fix a bug
+# working with hibernate 5.
+ENV GLASSFISH=glassfish-4.1.1-web.zip
+COPY $GLASSFISH /opt
+RUN cd /opt && \
+  unzip $GLASSFISH && \
+  rm $GLASSFISH && \
+  rm /opt/glassfish4/glassfish/modules/jboss-logging.jar
+COPY jboss-logging-3.3.0.Final.jar /opt/glassfish4/glassfish/modules
+
+
+# Setup MySQL
+#
 # Turn off autocommit
 RUN cd /etc/mysql && \
   sed -e 's/^\(\[mysqld\]\)/\1\nautocommit=0/' my.cnf > /tmp/my.cnf && \
@@ -32,13 +53,9 @@ RUN /etc/init.d/mysql start && \
   rm /tmp/$SQL
 
 
-# Install Glassfish
-#ENV GLASSFISH=glassfish-4.1.1-web.zip
-#COPY $GLASSFISH /opt
-#RUN cd /opt && \
-#  unzip $GLASSFISH && \
-#  rm $GLASSFISH
-## update jboss-logging jar
+
+
+
 ## install dock-app
 
 
