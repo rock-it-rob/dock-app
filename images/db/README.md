@@ -5,4 +5,4 @@ in *../app* for the build file for the application.
 docker run --name some-name
   -e MYSQL_ROOT_PASSWORD=mypassword
   -e MYSQL_DATABASE=rob
-  -d mysql:tagname
+  -d docproto/db
