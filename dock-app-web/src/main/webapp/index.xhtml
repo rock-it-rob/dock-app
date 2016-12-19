@@ -20,7 +20,11 @@
 		<h2>A little something from the database:</h2>
 		
 		<h:form>
-			<h:outputText value="#{dataLayerAccess.theString}"/>
+			<h:dataTable value="#{dataLayerAccess.allNames}" var="n">
+				<h:column>
+					<h:outputText value="#{n}"/>
+				</h:column>
+			</h:dataTable>
 		</h:form>
     
   </h:body>

@@ -3,3 +3,17 @@ create table rob.namerequest(
   updated timestamp not null,
   amount integer not null
 );
+
+insert into rob.namerequest values(
+'Rob',
+now(),
+1
+);
+
+insert into rob.namerequest values(
+'Terry',
+now(),
+2
+);
+
+commit;

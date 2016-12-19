@@ -1,5 +1,7 @@
 package dock.rob.app;
 
+import java.util.List;
+
 import java.io.Serializable;
 
 import javax.inject.Named;
@@ -28,9 +30,10 @@ public class DataLayerAccess implements Serializable
   private TableAccessBean tableAccess;
   
   /**
+   * Gets all the names from the database.
    */
-  public String getTheString()
+  public List<String> getAllNames()
   {
-    return this.tableAccess.test();
+    return this.tableAccess.allNames();
   }
 }

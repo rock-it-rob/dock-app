@@ -1,8 +1,11 @@
 package dock.rob.app.dblayer;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
@@ -24,19 +27,20 @@ public class TableAccessBean
   private EntityManager entityManager;
   
   /**
-   * Test method.
+   * Gets all names from the name request table.
+   *
+   * @return <code>List<String></code>
    */
-  public String test()
+  @TransactionAttribute(TransactionAttributeType.REQUIRED)
+  public List<String> allNames()
   {
-    String value = null;
+    ArrayList<String> names = new ArrayList<String>();
     TypedQuery<NameRequest> query = this.entityManager.createNamedQuery("allNameRequests", NameRequest.class);
-    List<NameRequest> result = query.getResultList();
-    // Just get the first result for now.
-    if (result != null && result.size() > 0)
+    for (NameRequest nr : query.getResultList())
     {
-      value = result.get(0).getName();
+      names.add(nr.getName());
     }
     
-    return value;
+    return names;
   }
 }
