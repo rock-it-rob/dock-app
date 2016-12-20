@@ -7,44 +7,94 @@
   xmlns:ui="http://java.sun.com/jsf/facelets"
 >
   
-  <head>
+  <h:head>
     
     <title>Docker Web App</title>
+		
+		<h:outputStylesheet library="css" name="edit.css"/>
+		
+		<script
+			src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+			integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
+			crossorigin="anonymous">
+		</script>
     
-  </head>
+  </h:head>
   
   <h:body>
     
     <h1>The Page</h1>
 		
-		<h2>A little something from the database:</h2>
+		<h2>A little something from the database</h2>
 		
 		<h:form>
-			<h:dataTable value="#{dataLayerAccess.allNameRequests}" var="n">
+			
+			<h:dataTable styleClass="editor" value="#{dataLayerAccess.allNameRequests}" var="n">
+				
+				<h:column>
+					
+					<a onclick="allowEdit(this)">Edit</a>
+					
+				</h:column>
 				
 				<h:column>
 					<f:facet name="header">
 						Name
 					</f:facet>
-					<h:outputText value="#{n.name}"/>
+					
+					<h:inputText value="#{n.name}" disabled="true" onfocus="this.value=this.value" onblur="disable(this)" onkeydown="checkEnter(event)"/>
 				</h:column>
+				
 				<h:column>
 					<f:facet name="header">
 						Updated
 					</f:facet>
+					
 					<h:outputText value="#{n.updated}">
 						<f:convertDateTime type="both" pattern="MM/dd/yyyy HH:mm:ss:SSS"/>
 					</h:outputText>
 				</h:column>
+				
 				<h:column>
 					<f:facet name="header">
 						Amount
 					</f:facet>
+					
 					<h:outputText value="#{n.amount}"/>
 				</h:column>
+				
 			</h:dataTable>
+			
 		</h:form>
     
   </h:body>
-  
+	
+	 <script type="text/javascript">
+    function allowEdit(btn)
+    {
+      button = $(btn);
+      $(button).hide();
+      td = $(button).parent();
+      td = $(td).next();
+      input = $(td).children("input");
+      $(input).attr("disabled", false);
+      $(input).focus();
+    }
+    function disable(input)
+    {
+      $(input).attr("disabled", true);
+      td = $(input).parent();
+      td = $(td).prev();
+      button = $(td).children("a");
+      $(button).show();
+    }
+    function checkEnter(event)
+    {
+      if (event.keyCode == 13)
+      {
+        disable(event.target);
+      }
+    }
+  </script>
+
 </html>

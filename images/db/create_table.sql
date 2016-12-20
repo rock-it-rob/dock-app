@@ -13,7 +13,7 @@ now(),
 insert into rob.namerequest values(
 'Terry',
 now(),
-2
+1
 );
 
 commit;

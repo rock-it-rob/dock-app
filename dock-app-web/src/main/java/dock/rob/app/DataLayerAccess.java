@@ -1,8 +1,12 @@
 package dock.rob.app;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import java.io.Serializable;
+
+import javax.annotation.PostConstruct;
 
 import javax.inject.Named;
 
@@ -31,10 +35,24 @@ public class DataLayerAccess implements Serializable
   private TableAccessBean tableAccess;
   
   /**
+   * Property that holds all the name request entries.
+   */
+  private ArrayList<NameRequest> nameRequests;
+  
+  /**
+   */
+  @PostConstruct
+  private void init()
+  {
+    this.nameRequests = new ArrayList<NameRequest>();
+    this.nameRequests.addAll(this.tableAccess.allNameRequests());
+  }
+  
+  /**
    * Gets all the names from the database.
    */
   public List<NameRequest> getAllNameRequests()
   {
-    return this.tableAccess.allNameRequests();
+    return this.nameRequests;
   }
 }
