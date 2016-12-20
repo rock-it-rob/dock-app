@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import dock.rob.app.dblayer.NameRequest;
+
 
 /**
  * <code>NameRequest</code> is an entity class to the name request table.
@@ -21,9 +23,9 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="namerequest", schema="rob")
 @NamedQueries({
-  @NamedQuery(name="allNameRequests", query="select n from NameRequest n")
+  @NamedQuery(name="allNameRequests", query="select n from NameRequestEntity n")
 })
-public class NameRequest implements dock.rob.app.dblayer.NameRequest
+public class NameRequestEntity implements NameRequest
 {
   @Id
   private String name;
@@ -35,20 +37,17 @@ public class NameRequest implements dock.rob.app.dblayer.NameRequest
   
   /**
    */
-  public NameRequest() {}
+  public NameRequestEntity() {}
   
   @Override
   public String getName() { return this.name; }
-  @Override
   public void setName(String name) { this.name = name; }
   
   @Override
   public Date getUpdated() { return this.updated; }
-  @Override
   public void setUpdated(Date updated) { this.updated = updated; }
   
   @Override
   public BigDecimal getAmount() { return this.amount; }
-  @Override
   public void setAmount(BigDecimal b) { this.amount = b; }
 }

@@ -14,11 +14,8 @@ import java.math.BigDecimal;
 public interface NameRequest
 {
   public String getName();
-  public void setName(String name);
   
   public Date getUpdated();
-  public void setUpdated(Date updated);
   
   public BigDecimal getAmount();
-  public void setAmount(BigDecimal b);
 }

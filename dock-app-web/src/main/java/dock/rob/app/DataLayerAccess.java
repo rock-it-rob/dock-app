@@ -37,22 +37,33 @@ public class DataLayerAccess implements Serializable
   /**
    * Property that holds all the name request entries.
    */
-  private ArrayList<NameRequest> nameRequests;
+  private ArrayList<NameRequestImpl> nameRequests;
   
   /**
    */
   @PostConstruct
   private void init()
   {
-    this.nameRequests = new ArrayList<NameRequest>();
-    this.nameRequests.addAll(this.tableAccess.allNameRequests());
+    this.nameRequests = new ArrayList<NameRequestImpl>();
+    for (NameRequest nr : this.tableAccess.allNameRequests())
+    {
+      this.nameRequests.add(new NameRequestImpl(nr));
+    }
   }
   
   /**
    * Gets all the names from the database.
    */
-  public List<NameRequest> getAllNameRequests()
+  public List<NameRequestImpl> getAllNameRequests()
   {
     return this.nameRequests;
+  }
+  
+  /**
+   * Updates the name request.
+   */
+  public void updateNameRequest(NameRequestImpl nameRequest)
+  {
+    this.tableAccess.updateName(nameRequest.getOldName(), nameRequest.getName());
   }
 }

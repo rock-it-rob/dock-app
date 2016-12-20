@@ -42,7 +42,12 @@
 						Name
 					</f:facet>
 					
-					<h:inputText value="#{n.name}" disabled="true" onfocus="this.value=this.value" onblur="disable(this)" onkeydown="checkEnter(event)"/>
+					 <h:inputText value="#{n.name}" disabled="true"
+            onkeydown="checkEnter(event)"
+            onfocus="this.value = this.value"
+          >
+            <f:ajax event="blur" exec="@this" render="@form" listener="#{dataLayerAccess.updateNameRequest(n)}" onevent="disable"/>
+          </h:inputText>
 				</h:column>
 				
 				<h:column>
@@ -70,15 +75,19 @@
   </h:body>
 	
 	 <script type="text/javascript">
-    function allowEdit(btn)
+    function allowEdit(button)
     {
-      button = $(btn);
       $(button).hide();
       td = $(button).parent();
       td = $(td).next();
       input = $(td).children("input");
       $(input).attr("disabled", false);
       $(input).focus();
+    }
+    function disableEdit(data)
+    {
+      if (data.status != "success") { return; }
+      disable(data.source);
     }
     function disable(input)
     {
