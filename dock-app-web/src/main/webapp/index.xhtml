@@ -21,13 +21,25 @@
 		
 		<h:form>
 			<h:dataTable value="#{dataLayerAccess.allNameRequests}" var="n">
+				
 				<h:column>
+					<f:facet name="header">
+						Name
+					</f:facet>
 					<h:outputText value="#{n.name}"/>
 				</h:column>
 				<h:column>
-					<h:outputText value="#{n.updated}"/>
+					<f:facet name="header">
+						Updated
+					</f:facet>
+					<h:outputText value="#{n.updated}">
+						<f:convertDateTime type="both" pattern="MM/dd/yyyy HH:mm:ss:SSS"/>
+					</h:outputText>
 				</h:column>
 				<h:column>
+					<f:facet name="header">
+						Amount
+					</f:facet>
 					<h:outputText value="#{n.amount}"/>
 				</h:column>
 			</h:dataTable>
