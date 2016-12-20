@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
 @NamedQueries({
   @NamedQuery(name="allNameRequests", query="select n from NameRequest n")
 })
-public class NameRequest
+public class NameRequest implements dock.rob.app.dblayer.NameRequest
 {
   @Id
   private String name;
@@ -37,12 +37,18 @@ public class NameRequest
    */
   public NameRequest() {}
   
+  @Override
   public String getName() { return this.name; }
+  @Override
   public void setName(String name) { this.name = name; }
   
+  @Override
   public Date getUpdated() { return this.updated; }
+  @Override
   public void setUpdated(Date updated) { this.updated = updated; }
   
+  @Override
   public BigDecimal getAmount() { return this.amount; }
+  @Override
   public void setAmount(BigDecimal b) { this.amount = b; }
 }

@@ -11,8 +11,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import dock.rob.app.dblayer.orm.NameRequest;
-
 
 /**
  * <code>TableAccessBean</code> is a simple EJB for accessing persistence
@@ -27,18 +25,18 @@ public class TableAccessBean
   private EntityManager entityManager;
   
   /**
-   * Gets all names from the name request table.
+   * Gets all records from the name request table.
    *
-   * @return <code>List<String></code>
+   * @return a List of {@ NameRequest}s
    */
   @TransactionAttribute(TransactionAttributeType.REQUIRED)
-  public List<String> allNames()
+  public List<NameRequest> allNameRequests()
   {
-    ArrayList<String> names = new ArrayList<String>();
-    TypedQuery<NameRequest> query = this.entityManager.createNamedQuery("allNameRequests", NameRequest.class);
-    for (NameRequest nr : query.getResultList())
+    ArrayList<NameRequest> names = new ArrayList<NameRequest>();
+    TypedQuery<dock.rob.app.dblayer.orm.NameRequest> query = this.entityManager.createNamedQuery("allNameRequests", dock.rob.app.dblayer.orm.NameRequest.class);
+    for (dock.rob.app.dblayer.orm.NameRequest nr : query.getResultList())
     {
-      names.add(nr.getName());
+      names.add(nr);
     }
     
     return names;

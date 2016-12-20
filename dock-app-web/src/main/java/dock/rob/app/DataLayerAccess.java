@@ -11,6 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.ejb.EJB;
 
 import dock.rob.app.dblayer.TableAccessBean;
+import dock.rob.app.dblayer.NameRequest;
 
 
 /**
@@ -32,8 +33,8 @@ public class DataLayerAccess implements Serializable
   /**
    * Gets all the names from the database.
    */
-  public List<String> getAllNames()
+  public List<NameRequest> getAllNameRequests()
   {
-    return this.tableAccess.allNames();
+    return this.tableAccess.allNameRequests();
   }
 }

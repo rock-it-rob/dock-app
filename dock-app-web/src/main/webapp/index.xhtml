@@ -20,9 +20,15 @@
 		<h2>A little something from the database:</h2>
 		
 		<h:form>
-			<h:dataTable value="#{dataLayerAccess.allNames}" var="n">
+			<h:dataTable value="#{dataLayerAccess.allNameRequests}" var="n">
 				<h:column>
-					<h:outputText value="#{n}"/>
+					<h:outputText value="#{n.name}"/>
+				</h:column>
+				<h:column>
+					<h:outputText value="#{n.updated}"/>
+				</h:column>
+				<h:column>
+					<h:outputText value="#{n.amount}"/>
 				</h:column>
 			</h:dataTable>
 		</h:form>
