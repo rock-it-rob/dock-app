@@ -11,6 +11,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.GenerationType;
 
 import dock.rob.app.dblayer.NameRequest;
 
@@ -22,22 +25,28 @@ import dock.rob.app.dblayer.NameRequest;
  */
 @Entity
 @Table(name="namerequest", schema="rob")
+@SequenceGenerator(name="IdGenerator", schema="rob")
 @NamedQueries({
   @NamedQuery(name="allNameRequests", query="select n from NameRequestEntity n")
 })
 public class NameRequestEntity implements NameRequest
 {
   @Id
+  @GeneratedValue(strategy=GenerationType.TABLE, generator="IdGenerator")
+  private BigDecimal id;
+  
   private String name;
   
   @Temporal(TemporalType.TIMESTAMP)
   private Date updated;
   
-  private BigDecimal amount;
-  
   /**
    */
   public NameRequestEntity() {}
+  
+  @Override
+  public BigDecimal getId() { return this.id; }
+  public void setId(BigDecimal id) { this.id = id; }
   
   @Override
   public String getName() { return this.name; }
@@ -46,8 +55,4 @@ public class NameRequestEntity implements NameRequest
   @Override
   public Date getUpdated() { return this.updated; }
   public void setUpdated(Date updated) { this.updated = updated; }
-  
-  @Override
-  public BigDecimal getAmount() { return this.amount; }
-  public void setAmount(BigDecimal b) { this.amount = b; }
 }

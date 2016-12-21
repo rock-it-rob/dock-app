@@ -2,7 +2,8 @@ package dock.rob.app;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import java.util.logging.Logger;
 
 import java.io.Serializable;
 
@@ -31,11 +32,13 @@ public class DataLayerAccess implements Serializable
 {
   private static final long serialVersionUID = 1L;
   
+  private static final Logger log = Logger.getLogger(DataLayerAccess.class.getPackage().getName());
+  
   @EJB
   private TableAccessBean tableAccess;
   
   /**
-   * Property that holds all the name request entries.
+   * Property that holds all the name requests.
    */
   private ArrayList<NameRequestImpl> nameRequests;
   
@@ -54,16 +57,20 @@ public class DataLayerAccess implements Serializable
   /**
    * Gets all the names from the database.
    */
-  public List<NameRequestImpl> getAllNameRequests()
-  {
-    return this.nameRequests;
-  }
+  public List<NameRequestImpl> getNameRequests() { return this.nameRequests; }
   
   /**
-   * Updates the name request.
+   * Updates any name requests that have been modified.
    */
-  public void updateNameRequest(NameRequestImpl nameRequest)
+  public void updateNameRequest(NameRequestImpl nr)
   {
-    this.tableAccess.updateName(nameRequest.getOldName(), nameRequest.getName());
+    NameRequest updated = this.tableAccess.update(nr);
+    for (int i = 0; i < this.nameRequests.size(); ++i)
+    {
+      if (this.nameRequests.get(i).getId() == updated.getId())
+      {
+        this.nameRequests.set(i, new NameRequestImpl(updated));
+      }
+    }
   }
 }

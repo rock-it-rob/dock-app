@@ -48,18 +48,23 @@ public class TableAccessBean
   }
   
   /**
-   * Updates the name on a {@ NameRequest}
+   * Updates the name on a {@ NameRequest}.
    *
-   * @param old <code>String</code> Old name value
-   * @param update <code>String</code> new name value
+   * <p>
+   * The provided {@ NameRequest} is looked up by its id and its name, and
+   * update timestamp are updated.
+   * 
+   * @param nameRequest {@ NameRequest}
+   * @return the update {@ NameRequest}
    */
   @TransactionAttribute(TransactionAttributeType.REQUIRED)
-  public void updateName(String old, String update)
+  public NameRequest update(NameRequest nameRequest)
   {
-    NameRequestEntity nr = this.entityManager.find(NameRequestEntity.class, old);
-    nr.setName(update);
+    NameRequestEntity nr = this.entityManager.find(NameRequestEntity.class, nameRequest.getId());
+    nr.setName(nameRequest.getName());
     nr.setUpdated(new Date());
-    nr.setAmount(nr.getAmount().add(new BigDecimal(1)));
     this.entityManager.persist(nr);
+    
+    return nr;
   }
 }

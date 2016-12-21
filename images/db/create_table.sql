@@ -1,19 +1,12 @@
 create table rob.namerequest(
-  name varchar(256) not null primary key,
-  updated timestamp not null,
-  amount integer not null
+  id integer not null auto_increment primary key,
+  name varchar(256) not null unique,
+  updated timestamp not null default now()
 );
 
-insert into rob.namerequest values(
-'Rob',
-now(),
-1
-);
-
-insert into rob.namerequest values(
-'Terry',
-now(),
-1
-);
+insert into rob.namerequest(name) values('Rob');
+insert into rob.namerequest(name) values('Terry');
+insert into rob.namerequest(name) values('Vik');
+insert into rob.namerequest(name) values('April');
 
 commit;

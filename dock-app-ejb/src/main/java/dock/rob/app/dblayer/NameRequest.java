@@ -13,9 +13,7 @@ import java.math.BigDecimal;
  */
 public interface NameRequest
 {
+  public BigDecimal getId();
   public String getName();
-  
   public Date getUpdated();
-  
-  public BigDecimal getAmount();
 }

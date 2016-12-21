@@ -29,7 +29,7 @@
 		
 		<h:form>
 			
-			<h:dataTable styleClass="editor" value="#{dataLayerAccess.allNameRequests}" var="n">
+			<h:dataTable styleClass="editor" value="#{dataLayerAccess.nameRequests}" var="n">
 				
 				<h:column>
 					
@@ -42,11 +42,11 @@
 						Name
 					</f:facet>
 					
-					 <h:inputText value="#{n.name}" disabled="true"
+					 <h:inputText value="#{n.name}"
             onkeydown="checkEnter(event)"
             onfocus="this.value = this.value"
           >
-            <f:ajax event="blur" exec="@this" render="@form" listener="#{dataLayerAccess.updateNameRequest(n)}" onevent="disable"/>
+            <f:ajax event="blur" execute="@this" render="updated" listener="#{dataLayerAccess.updateNameRequest(n)}" onevent="disableEdit"/>
           </h:inputText>
 				</h:column>
 				
@@ -55,17 +55,9 @@
 						Updated
 					</f:facet>
 					
-					<h:outputText value="#{n.updated}">
+					<h:outputText id="updated" value="#{n.updated}">
 						<f:convertDateTime type="both" pattern="MM/dd/yyyy HH:mm:ss:SSS"/>
 					</h:outputText>
-				</h:column>
-				
-				<h:column>
-					<f:facet name="header">
-						Amount
-					</f:facet>
-					
-					<h:outputText value="#{n.amount}"/>
 				</h:column>
 				
 			</h:dataTable>
@@ -75,6 +67,9 @@
   </h:body>
 	
 	 <script type="text/javascript">
+		$(document).ready(function() {
+			$("table.editor td input").attr("disabled", true);
+		});
     function allowEdit(button)
     {
       $(button).hide();
@@ -101,7 +96,7 @@
     {
       if (event.keyCode == 13)
       {
-        disable(event.target);
+				$(event.target).blur();
       }
     }
   </script>

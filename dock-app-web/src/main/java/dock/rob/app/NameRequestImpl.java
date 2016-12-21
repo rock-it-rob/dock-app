@@ -15,38 +15,28 @@ import dock.rob.app.dblayer.NameRequest;
  */
 public class NameRequestImpl implements NameRequest
 {
+  private BigDecimal id;
   private String name;
   private Date updated;
-  private BigDecimal amount;
-  
-  private String oldName;
   
   /**
    * Create a new instance from an existing implementation.
    */
   public NameRequestImpl(NameRequest nameRequest)
   {
+    this.id = nameRequest.getId();
     this.name = nameRequest.getName();
     this.updated = nameRequest.getUpdated();
-    this.amount = nameRequest.getAmount();
   }
   
   @Override
+  public BigDecimal getId() { return this.id; }
+  
+  @Override
   public String getName() { return this.name; }
-  
-  public void setName(String name)
-  {
-    this.oldName = this.name;
-    this.name = name;
-  }
-  
-  public String getOldName() { return this.oldName; }
+  public void setName(String name) { this.name = name; }
   
   @Override
   public Date getUpdated() { return this.updated; }
   public void setUpdated(Date d) { this.updated = d; }
-  
-  @Override
-  public BigDecimal getAmount() { return this.amount; }
-  public void setAmount(BigDecimal b) { this.amount = b; }
 }
