@@ -44,6 +44,37 @@ table.editor th
 
 table.editor td
 {
-  background: #eee;
   padding: 8px;
+}
+
+table.editor td input[type=text]
+{
+  background: #fff;
+  border: none;
+  border-bottom: 1px solid #fff;
+  padding: 4px;
+  outline-width: 0;
+}
+
+table.editor td input[type=text]:focus
+{
+  color: #000;
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+table.editor td .edit-btn
+{
+  font-size: .8em;
+  color: #fff;
+  background: #07f;
+  padding: 8px 16px;
+  display: block;
+  cursor: pointer;
+}
+
+table.editor td .edit-btn:hover
+{
+  background: #fff;
+  color: #07f;
 }
