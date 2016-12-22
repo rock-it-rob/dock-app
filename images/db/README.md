@@ -3,4 +3,4 @@ in *../app* for the build file for the application.
 
 ## Starting the container
 
-docker run --name db -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=rob -d docproto/db
+The **docproto/db** image can be started using the *start.sh* or *start.bat* files.
