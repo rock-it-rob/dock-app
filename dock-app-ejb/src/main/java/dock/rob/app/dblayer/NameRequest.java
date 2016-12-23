@@ -15,5 +15,7 @@ public interface NameRequest
 {
   public BigDecimal getId();
   public String getName();
+  public void setName(String name);
   public Date getUpdated();
+  public void setUpdated(Date date);
 }

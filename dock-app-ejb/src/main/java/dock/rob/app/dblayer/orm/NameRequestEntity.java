@@ -50,9 +50,11 @@ public class NameRequestEntity implements NameRequest
   
   @Override
   public String getName() { return this.name; }
+  @Override
   public void setName(String name) { this.name = name; }
   
   @Override
   public Date getUpdated() { return this.updated; }
-  public void setUpdated(Date updated) { this.updated = updated; }
+  @Override
+  public void setUpdated(Date date) { this.updated = date; }
 }

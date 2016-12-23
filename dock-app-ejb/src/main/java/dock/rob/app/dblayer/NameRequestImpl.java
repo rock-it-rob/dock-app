@@ -1,10 +1,8 @@
-package dock.rob.app;
+package dock.rob.app.dblayer;
 
 import java.util.Date;
 
 import java.math.BigDecimal;
-
-import dock.rob.app.dblayer.NameRequest;
 
 
 /**
@@ -34,9 +32,13 @@ public class NameRequestImpl implements NameRequest
   
   @Override
   public String getName() { return this.name; }
+  
+  @Override
   public void setName(String name) { this.name = name; }
   
   @Override
   public Date getUpdated() { return this.updated; }
-  public void setUpdated(Date d) { this.updated = d; }
+  
+  @Override
+  public void setUpdated(Date date) { this.updated = date; }
 }
