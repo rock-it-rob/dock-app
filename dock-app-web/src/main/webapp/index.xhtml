@@ -48,7 +48,7 @@
             onkeydown="checkEnter(event)"
             onfocus="this.value = this.value"
           >
-            <f:ajax event="blur" execute="@this" render="updated" onevent="disableEdit"/>
+            <f:ajax event="blur" execute="@this" render="@this updated" onevent="disableEdit"/>
           </h:inputText>
 				</h:column>
 				

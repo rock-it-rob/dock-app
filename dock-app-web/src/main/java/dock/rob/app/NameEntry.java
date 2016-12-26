@@ -57,13 +57,19 @@ public class NameEntry implements Serializable
   
   /**
    * Update the name value on the database.
-   *
-   * @throws {@ UpdateException} if the name could not be updated.
    */
-  public void setName(String name) throws UpdateException
+  public void setName(String name)
   {
-    NameRequest nr = this.tableAccess.updateName(this.id, name);
-    this.updated = nr.getUpdated();
+    try
+    {
+      NameRequest nr = this.tableAccess.updateName(this.id, name);
+      this.name = name;
+      this.updated = nr.getUpdated();  
+    }
+    catch (UpdateException e)
+    {
+      // nothing yet
+    }
   }
   
   /**
