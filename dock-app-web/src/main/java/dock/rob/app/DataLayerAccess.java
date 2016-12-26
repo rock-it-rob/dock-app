@@ -78,6 +78,5 @@ public class DataLayerAccess implements Serializable
   */
   
   @Inject
-  @Name
   private Instance<NameEntry> nameEntryGenerator;
 }

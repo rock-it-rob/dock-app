@@ -22,7 +22,6 @@ import dock.rob.app.dblayer.UpdateException;
  *
  * @author Rob Benton
  */
-@Name
 @Dependent
 public class NameEntry implements Serializable
 {
