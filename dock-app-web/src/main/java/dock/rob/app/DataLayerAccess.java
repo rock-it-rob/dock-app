@@ -1,7 +1,9 @@
 package dock.rob.app;
 
+import java.util.Set;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Date;
 
 import java.util.logging.Logger;
 
@@ -10,6 +12,11 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 
 import javax.inject.Named;
+import javax.inject.Inject;
+
+import javax.enterprise.inject.Instance;
+import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.New;
 
 import javax.enterprise.context.SessionScoped;
 
@@ -38,36 +45,39 @@ public class DataLayerAccess implements Serializable
   private TableAccessBean tableAccess;
   
   /**
-   * Property that holds all the name requests.
+   * Property that holds all the names. Since names cannot be duplicated on the
+   * database we will use a map of names to update times.
    */
-  private ArrayList<NameRequest> nameRequests;
+  private HashSet<NameEntry> names;
   
   /**
    */
   @PostConstruct
   private void init()
   {
-    this.nameRequests = new ArrayList<NameRequest>();
-    this.nameRequests.addAll(this.tableAccess.allNameRequests());
-  }
-  
-  /**
-   * Gets all the names from the database.
-   */
-  public List<NameRequest> getNameRequests() { return this.nameRequests; }
-  
-  /**
-   * Updates any name requests that have been modified.
-   */
-  public void updateNameRequest(NameRequest nr)
-  {
-    NameRequest updated = this.tableAccess.update(nr);
-    for (int i = 0; i < this.nameRequests.size(); ++i)
+    this.names = new HashSet<NameEntry>();
+    for (NameRequest nr : this.tableAccess.allNameRequests())
     {
-      if (this.nameRequests.get(i).getId() == updated.getId())
-      {
-        this.nameRequests.set(i, updated);
-      }
+      NameEntry ne = this.nameEntryGenerator.get();
+      ne.init(nr.getId(), nr.getName(), nr.getUpdated());
+      this.names.add(ne);
     }
   }
+  
+  /**
+   */
+  public Set<NameEntry> getNames() { return this.names; }
+  
+  /**
+   * Producer object which creates new instances of {@ NameEntry}.
+   */
+  /*
+  @Produces
+  @Name
+  private NameEntry nameEntryProducer { return new NameEntry(); }
+  */
+  
+  @Inject
+  @Name
+  private Instance<NameEntry> nameEntryGenerator;
 }

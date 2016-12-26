@@ -29,7 +29,7 @@
 		
 		<h:form>
 			
-			<h:dataTable styleClass="editor" value="#{dataLayerAccess.nameRequests}" var="n">
+			<h:dataTable styleClass="editor" value="#{dataLayerAccess.names}" var="n">
 				
 				<h:column>
 					
@@ -48,7 +48,7 @@
             onkeydown="checkEnter(event)"
             onfocus="this.value = this.value"
           >
-            <f:ajax event="blur" execute="@this" render="updated" listener="#{dataLayerAccess.updateNameRequest(n)}" onevent="disableEdit"/>
+            <f:ajax event="blur" execute="@this" render="updated" onevent="disableEdit"/>
           </h:inputText>
 				</h:column>
 				
@@ -58,7 +58,7 @@
 					</f:facet>
 					
 					<h:outputText id="updated" value="#{n.updated}">
-						<f:convertDateTime type="both" pattern="MM/dd/yyyy HH:mm:ss:SSS"/>
+						<f:convertDateTime type="both" pattern="MM/dd/yyyy HH:mm:ss:SSS" timeZone="US/Central"/>
 					</h:outputText>
 				</h:column>
 				
