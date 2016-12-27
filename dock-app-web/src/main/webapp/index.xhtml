@@ -29,6 +29,8 @@
 		
 		<h:form>
 			
+			<h:messages id="msg" errorClass="error" summary="true" detail="true"/>
+			
 			<h:dataTable styleClass="editor" value="#{dataLayerAccess.names}" var="n">
 				
 				<h:column>
@@ -44,11 +46,12 @@
 						Name
 					</f:facet>
 					
-					 <h:inputText value="#{n.name}"
+					 <h:inputText
+						value="#{n.name}"
             onkeydown="checkEnter(event)"
             onfocus="this.value = this.value"
           >
-            <f:ajax event="blur" execute="@this" render="@this updated" onevent="disableEdit"/>
+            <f:ajax event="blur" execute="@this" render="@form" onevent="disableEdit"/>
           </h:inputText>
 				</h:column>
 				

@@ -77,3 +77,11 @@ table.editor td .edit-btn:hover
 {
   background-image: url("#{resource['img/bluepencil.svg']}");
 }
+
+.error
+{
+  color: #b00;
+  text-align: center;
+  font-size: .8em;
+  padding: 10px 0;
+}

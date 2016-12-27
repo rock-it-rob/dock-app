@@ -12,6 +12,10 @@ import javax.persistence.PersistenceException;
 
 import javax.enterprise.context.Dependent;
 
+import javax.faces.application.FacesMessage;
+
+import javax.faces.context.FacesContext;
+
 import dock.rob.app.dblayer.NameRequest;
 import dock.rob.app.dblayer.TableAccessBean;
 import dock.rob.app.dblayer.UpdateException;
@@ -67,7 +71,9 @@ public class NameEntry implements Serializable
     }
     catch (UpdateException e)
     {
-      // nothing yet
+      FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid value", "Invalid value");
+      FacesContext fc = FacesContext.getCurrentInstance();
+      fc.addMessage(null, fm);
     }
   }
   
