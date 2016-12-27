@@ -69,7 +69,7 @@ public class TableAccessBean
   @TransactionAttribute(TransactionAttributeType.REQUIRED)
   public NameRequest updateName(BigDecimal id, String name) throws UpdateException
   {
-    NameRequest nr = null;
+    NameRequestEntity nr = null;
     
     try
     {
@@ -84,6 +84,6 @@ public class TableAccessBean
       throw new UpdateException(e);
     }
     
-    return new NameRequestImpl(nr);
+    return nr;
   }
 }
