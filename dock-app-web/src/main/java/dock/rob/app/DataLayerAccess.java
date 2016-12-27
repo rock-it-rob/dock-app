@@ -69,14 +69,8 @@ public class DataLayerAccess implements Serializable
   public Set<NameEntry> getNames() { return this.names; }
   
   /**
-   * Producer object which creates new instances of {@ NameEntry}.
+   * Creates a new instance of a {@ NameEntry} bean.
    */
-  /*
-  @Produces
-  @Name
-  private NameEntry nameEntryProducer { return new NameEntry(); }
-  */
-  
   @Inject
   private Instance<NameEntry> nameEntryGenerator;
 }
