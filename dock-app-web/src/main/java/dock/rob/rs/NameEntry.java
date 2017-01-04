@@ -10,7 +10,7 @@ import javax.ws.rs.GET;
  *
  * @author Rob Benton
  */
-@Path("/nameentry")
+@Path("/")
 public class NameEntry
 {
   @GET

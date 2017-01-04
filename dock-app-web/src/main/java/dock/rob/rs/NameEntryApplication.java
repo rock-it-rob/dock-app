@@ -10,5 +10,5 @@ import javax.ws.rs.core.Application;
  *
  * @author Rob Benton
  */
-@ApplicationPath("/")
+@ApplicationPath("/nameentry")
 public class NameEntryApplication extends Application {}
