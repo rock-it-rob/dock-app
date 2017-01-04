@@ -25,8 +25,11 @@
      * Models
      */
     var NameEntry = Backbone.Model.extend({
+      defaults: {
+        name: "Rob"
+      },
       initialize: function() {
-        this.set({name: "blank"});
+        this.urlRoot = "/nameentry";
       }
     });
     
@@ -44,8 +47,9 @@
       // $el - it's a cached jQuery object (el), in which you can use jQuery functions
       //       to push content. Like the Hello World in this case.
       render: function(){
-        var model = new NameEntry();
-        this.$el.html(model.get("name"));
+        var ne = new NameEntry();
+        ne.fetch();
+        this.$el.html(ne.get("name"));
       }
     });
     var appView = new AppView();

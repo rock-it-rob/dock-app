@@ -1,7 +1,11 @@
 package dock.rob.rs;
 
+import java.util.logging.Logger;
+
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.Produces;
 
 
 /**
@@ -13,9 +17,14 @@ import javax.ws.rs.GET;
 @Path("/")
 public class NameEntry
 {
+  private static final Logger log = Logger.getLogger(NameEntry.class.getPackage().getName());
+  
   @GET
-  public String get()
+  @Path("{id}")
+  @Produces("application/json")
+  public String get(@PathParam("id") String id)
   {
-    return "test";
+    log.info("GET request for id: " + id);
+    return "{ name: \"test\" }";
   }
 }
