@@ -12,7 +12,7 @@
     validation-table-name="sys.sys_config"
     fail-all-connections="true"
   >
-    <property name="url" value="jdbc:mysql://container-db:3306/rob"/>
+    <property name="url" value="jdbc:mysql://127.0.0.1:3306/rob"/>
     <property name="user" value="root"/>
     <property name="password" value="root"/>
   </jdbc-connection-pool>
