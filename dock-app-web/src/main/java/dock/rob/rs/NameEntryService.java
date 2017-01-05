@@ -33,6 +33,9 @@ public class NameEntryService
    */
   public NameEntryService() {}
   
+  @EJB
+  private TableAccessBean tableAccess;
+  
   /**
    * Retrives a {@ NameRequest} by its name property.
    *
@@ -48,9 +51,7 @@ public class NameEntryService
   {
     log.info("GET request for name: " + name);
     
-    TableAccessBean tableAccess = this.application.getTableAccessBean();
-    if (tableAccess == null) { throw new RuntimeException("SHIT"); }
-    NameRequest nr = tableAccess.getNameRequest(name);
+    NameRequest nr = this.tableAccess.getNameRequest(name);
     if (nr == null) { return null; }
     NameEntry ne = new NameEntry(nr);
     
