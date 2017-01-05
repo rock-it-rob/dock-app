@@ -27,7 +27,8 @@ import dock.rob.app.dblayer.NameRequest;
 @Table(name="namerequest", schema="rob")
 @SequenceGenerator(name="IdGenerator", schema="rob")
 @NamedQueries({
-  @NamedQuery(name="allNameRequests", query="select n from NameRequestEntity n")
+  @NamedQuery(name="allNameRequests", query="select n from NameRequestEntity n"),
+  @NamedQuery(name="NameRequestByName", query="select n from NameRequestEntity n where name = :name")
 })
 public class NameRequestEntity implements NameRequest
 {

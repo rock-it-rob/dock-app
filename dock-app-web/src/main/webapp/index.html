@@ -25,8 +25,10 @@
      */
     var NameEntry = Backbone.Model.extend({
       defaults: {
-        name: "Rob"
-      }
+        name: "Rob",
+        updated: null
+      },
+      idAttribute: "name"
     });
     
     
@@ -53,10 +55,10 @@
       // $el - it's a cached jQuery object (el), in which you can use jQuery functions
       //       to push content. Like the Hello World in this case.
       render: function(){
-        var ne = new NameEntry({ id: "id-one" });
+        var ne = new NameEntry();
         var c = new NameCollection([ne]);
         ne.fetch();
-        this.$el.html(ne.get("name"));
+        this.$el.html(ne.id + " : " + ne.get("name") + " : " + ne.get("updated"));
       }
     });
     var appView = new AppView();

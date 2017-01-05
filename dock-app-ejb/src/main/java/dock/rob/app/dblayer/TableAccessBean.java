@@ -86,4 +86,22 @@ public class TableAccessBean
     
     return nr;
   }
+  
+  /**
+   * Gets a {@ NameRequest} by its name
+   *
+   * @param name <code>String</code>
+   * @return the matching {@ NameRequest} or null if none was found.
+   */
+  @TransactionAttribute(TransactionAttributeType.REQUIRED)
+  public NameRequest getNameRequest(String name)
+  {
+    TypedQuery<NameRequestEntity> query = this.entityManager.createNamedQuery("NameRequestByName", NameRequestEntity.class);
+    query.setParameter("name", name);
+    List<NameRequestEntity> result = query.getResultList();
+    NameRequestEntity nr = null;
+    if (result.size() == 1) { nr = result.get(0); }
+    
+    return nr;
+  }
 }

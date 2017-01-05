@@ -2,82 +2,51 @@ package dock.rob.app;
 
 import java.util.Date;
 
-import java.io.Serializable;
-
 import java.math.BigDecimal;
 
-import javax.ejb.EJB;
-
-import javax.persistence.PersistenceException;
-
-import javax.enterprise.context.Dependent;
-
-import javax.faces.application.FacesMessage;
-
-import javax.faces.context.FacesContext;
-
 import dock.rob.app.dblayer.NameRequest;
-import dock.rob.app.dblayer.TableAccessBean;
-import dock.rob.app.dblayer.UpdateException;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorOrder;
+import javax.xml.bind.annotation.XmlAccessOrder;
 
 
 /**
- * <code>NameEntry</code> represents a name record on the database.
+ * <code>NameEntry</code> is a JAXB class containing a {@ NameRequest}.
  *
  * @author Rob Benton
  */
-@Dependent
-public class NameEntry implements Serializable
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorOrder(XmlAccessOrder.ALPHABETICAL)
+public class NameEntry
 {
-  private static final long serialVersionUID = 1L;
-  
   private BigDecimal id;
   private String name;
   private Date updated;
-  
-  @EJB
-  private TableAccessBean tableAccess;
   
   /**
    */
   public NameEntry() {}
   
   /**
-   * @param id <code>BigDecimal</code>
-   * @param name <code>String</code>
-   * @param updated <code>Date</code>
+   * @param nameRequest {@ NameRequest}
    */
-  protected void init(BigDecimal id, String name, Date updated)
+  public NameEntry(NameRequest nameRequest)
   {
-    this.id = id;
-    this.name = name;
-    this.updated = updated;
+    this.id = nameRequest.getId();
+    this.name = nameRequest.getName();
+    this.updated = nameRequest.getUpdated();
   }
   
-  /**
-   */
+  public BigDecimal getId() { return this.id; }
+  public void setId(BigDecimal id) { this.id = id; }
+  
   public String getName() { return this.name; }
+  public void setName(String name) { this.name = name; }
   
-  /**
-   * Update the name value on the database.
-   */
-  public void setName(String name)
-  {
-    try
-    {
-      NameRequest nr = this.tableAccess.updateName(this.id, name);
-      this.name = name;
-      this.updated = nr.getUpdated();  
-    }
-    catch (UpdateException e)
-    {
-      FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid value", "Invalid value");
-      FacesContext fc = FacesContext.getCurrentInstance();
-      fc.addMessage(null, fm);
-    }
-  }
-  
-  /**
-   */
   public Date getUpdated() { return this.updated; }
+  public void setUpdated(Date d) { this.updated = d; }
 }
