@@ -7,6 +7,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 
+import javax.ws.rs.core.MediaType;
+
 
 /**
  * <code>NameEntry</code> is a JAX-RS class serving rest methods that
@@ -21,7 +23,7 @@ public class NameEntry
   
   @GET
   @Path("{id}")
-  @Produces("application/json")
+  @Produces(MediaType.APPLICATION_JSON)
   public String get(@PathParam("id") String id)
   {
     log.info("GET request for id: " + id);
