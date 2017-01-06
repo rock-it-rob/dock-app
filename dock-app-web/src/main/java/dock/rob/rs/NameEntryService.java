@@ -49,8 +49,7 @@ public class NameEntryService
    */
   @GET
   @Path("{name}")
-  //@Produces(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_XML)
+  @Produces(MediaType.APPLICATION_JSON)
   public Response get(@PathParam("name") String name)
   {
     log.info("GET request for name: " + name);
