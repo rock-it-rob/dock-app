@@ -40,12 +40,11 @@ public class NameEntryService
   private TableAccessBean tableAccess;
   
   /**
-   * Retrives a {@ NameRequest} by its name property.
+   * Retrives a {@ NameEntry} by its name property.
    *
    * @param name <code>String</code> the name property of the
-   * {@ NameRequest}
-   * @return the {@ NameRequest} matching the name parameter or null
-   * if none was found.
+   * {@ NameEntry}
+   * @return json <code>Response</code> of a single {@ NameEntry}.
    */
   @GET
   @Path("{name}")
