@@ -1,2 +1,3 @@
-var appView = new AppView({ collection: new NameCollection() });
-appView.collection.fetch();
+var nameCollection = new NameCollection();
+var appView = new AppView({ collection: nameCollection });
+nameCollection.fetch();
