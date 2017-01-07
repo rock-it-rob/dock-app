@@ -1,5 +1,8 @@
 package dock.rob.rs;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
@@ -13,6 +16,7 @@ import javax.ws.rs.Produces;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.GenericEntity;
 
 import dock.rob.app.NameEntry;
 
@@ -62,5 +66,29 @@ public class NameEntryService
     NameEntry ne = new NameEntry(nr);
     
     return Response.ok(ne).build();
+  }
+  
+  /**
+   * Gets all {@ NameEntry}s
+   *
+   * @return <code>Response</code> containing a <code>List</code> of
+   * {@ NameEntry}.
+   */
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response all()
+  {
+    log.info("GET request for all.");
+    
+    List<NameRequest> all = this.tableAccess.allNameRequests();
+    ArrayList<NameEntry> entries = new ArrayList<NameEntry>();
+    for (NameRequest nr : all)
+    {
+      entries.add(new NameEntry(nr));
+    }
+    
+    GenericEntity<ArrayList<NameEntry>> ge = new GenericEntity<ArrayList<NameEntry>>(entries) {};
+    
+    return Response.ok(ge).build();
   }
 }
