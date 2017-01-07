@@ -1,12 +1,12 @@
 var NameView = Backbone.View.extend({
-  tagName: "li",
+  tagName: "tr",
   initialize: function() {
   },
   render: function() {
     var name = this.model.get("name");
     var updated = this.model.get("updated");
     this.$el.empty();
-    this.$el.append(name + " : " + updated);
+    this.$el.append("<td>" + name + "</td><td>" + updated + "</td>");
     
     return this;
   }
