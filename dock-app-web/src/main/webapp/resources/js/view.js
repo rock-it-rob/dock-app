@@ -6,7 +6,8 @@ var NameView = Backbone.View.extend({
     var name = this.model.get("name");
     var updated = this.model.get("updated");
     this.$el.empty();
-    this.$el.append("<td>" + name + "</td><td>" + updated + "</td>");
+    this.$el.append("<td><input type='text' value='" + name + "'/></td>");
+    this.$el.append("<td>" + updated + "</td>");
     
     return this;
   }
