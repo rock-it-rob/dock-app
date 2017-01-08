@@ -28,10 +28,29 @@ var NameView = Backbone.View.extend({
     var textbox = $(event.target);
     textbox.val(textbox.val());
   },
-  // When focus leaves the text box.
+  // When focus leaves the text box update the model.
   textBoxBlur: function(event) {
     var textbox = $(event.target);
     textbox.attr("disabled", true);
+    
+    //
+    // TODO:
+    //  Fix all this!!!!!!
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    
+    
+    // Assign the new value.
+    this.model.set({ name: textbox.val() });
+    
+    // This needs error handling utlimately.
+    this.model.save();
   },
   // If enter is pressed exit the editing of the text box.
   checkEnter: function(event) {
