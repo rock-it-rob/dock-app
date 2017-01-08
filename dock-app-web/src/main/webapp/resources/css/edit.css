@@ -69,13 +69,13 @@ table.editor td .edit-btn
   width: 24px;
   display: block;
   cursor: pointer;
-  background-image: url("/dockapp/resources/img/pencil.svg");
+  background-image: url("../img/pencil.svg");
   background-size: contain;
 }
 
 table.editor td .edit-btn:hover
 {
-  background-image: url("/dockapp/resources/img/bluepencil.svg");
+  background-image: url("../img/bluepencil.svg");
 }
 
 .error
