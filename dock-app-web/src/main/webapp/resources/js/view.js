@@ -6,10 +6,37 @@ var NameView = Backbone.View.extend({
     var name = this.model.get("name");
     var updated = this.model.get("updated");
     this.$el.empty();
-    this.$el.append("<td><span class='edit-btn'/></td><td><input type='text' disabled='yes' value='" + name + "'/></td>");
+    this.$el.append("<td><span class='edit-btn'/></td><td><input class='name-box' type='text' disabled='yes' value='" + name + "'/></td>");
     this.$el.append("<td>" + updated + "</td>");
     
     return this;
+  },
+  events: {
+    "click .edit-btn" : "allowEdit",
+    "focus .name-box" : "textBoxFocus",
+    "blur .name-box" : "textBoxBlur",
+    "keyup .name-box" : "checkEnter"
+  },
+  // This function handles the enabling of editting on the name text box.
+  allowEdit: function() {
+    var input = this.$el.find(".name-box");
+    input.attr("disabled", false);
+    input.focus();
+  },
+  // Handle the focus of the text box.
+  textBoxFocus: function(event) {
+    var textbox = $(event.target);
+    textbox.val(textbox.val());
+  },
+  // When focus leaves the text box.
+  textBoxBlur: function(event) {
+    var textbox = $(event.target);
+    textbox.attr("disabled", true);
+  },
+  // If enter is pressed exit the editing of the text box.
+  checkEnter: function(event) {
+    var textbox = $(event.target);
+    if (event.keyCode == 13) { textbox.blur(); }
   }
 });
 
