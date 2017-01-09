@@ -108,9 +108,12 @@ public class NameEntryService
   {
     log.info("Recieved PUT for: " + name);
     
+    NameRequest result = null;
     try
     {
-      this.tableAccess.updateName(nameEntry.getId(), nameEntry.getName());
+      result = this.tableAccess.updateName(nameEntry.getId(), nameEntry.getName());
+      
+      log.info("Name updated at: " + result.getUpdated());
     }
     catch (UpdateException e)
     {
@@ -119,16 +122,6 @@ public class NameEntryService
       return Response.serverError().build();
     }
     
-    
-    //
-    // Not exactly sure what the return should include here but I think I'm on
-    // the right track.
-    //
-    //
-    //
-    //
-    //
-    // 
-    return Response.ok(nameEntry).build();
+    return Response.ok(result).build();
   }
 }
