@@ -1,6 +1,9 @@
 var NameView = Backbone.View.extend({
   tagName: "tr",
   initialize: function() {
+    this.listenTo(this.model, "sync", this.render);
+    this.listenTo(this.model, "error", this.render);
+    this.listenTo(this.model, "change", this.updateModel);
   },
   render: function() {
     var name = this.model.get("name");
@@ -9,53 +12,53 @@ var NameView = Backbone.View.extend({
     this.$el.append("<td><span class='edit-btn'/></td><td><input class='name-box' type='text' disabled='yes' value='" + name + "'/></td>");
     this.$el.append("<td>" + updated + "</td>");
     
+    alert("rendered");
+    
     return this;
   },
   events: {
     "click .edit-btn" : "allowEdit",
-    "focus .name-box" : "textBoxFocus",
-    "blur .name-box" : "textBoxBlur",
-    "keyup .name-box" : "checkEnter"
+    "keyup .name-box" : "checkEnter",
+    "blur .name-box" : "updateName"
   },
   // This function handles the enabling of editting on the name text box.
   allowEdit: function() {
     var input = this.$el.find(".name-box");
     input.attr("disabled", false);
     input.focus();
-  },
-  // Handle the focus of the text box.
-  textBoxFocus: function(event) {
-    var textbox = $(event.target);
-    textbox.val(textbox.val());
+    input.val(input.val());
   },
   // When focus leaves the text box update the model.
-  textBoxBlur: function(event) {
-    var textbox = $(event.target);
-    textbox.attr("disabled", true);
-    
-    //
-    // TODO:
-    //  Fix all this!!!!!!
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    
-    
-    // Assign the new value.
+  updateName: function() {
+    var textbox = this.$el.find(".name-box");
     this.model.set({ name: textbox.val() });
-    
-    // This needs error handling utlimately.
-    this.model.save();
+  },
+  // Syncrhonize the model with the server.
+  updateModel: function() {
+    this.model.save(this.model.attributes, { error: this.badUpdate });
   },
   // If enter is pressed exit the editing of the text box.
   checkEnter: function(event) {
-    var textbox = $(event.target);
-    if (event.keyCode == 13) { textbox.blur(); }
+    if (event.keyCode == 13)
+    {
+      $(event.target).attr("disabled", true);
+    }
+  },
+  // Show an error if the update fails.
+  badUpdate: function(model, response, options)
+  {
+    //alert("Could not update name");
+    alert(response.statusText);
+    //
+    //
+    // PUT AN ERROR MESSAGE SOMEWHERE
+    //
+    //
+    //
+    //
+    
+    // Reset the model which should re-render the view.
+    model.fetch();
   }
 });
 

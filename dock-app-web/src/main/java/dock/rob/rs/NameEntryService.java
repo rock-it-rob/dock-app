@@ -24,6 +24,7 @@ import dock.rob.app.NameEntry;
 
 import dock.rob.app.dblayer.TableAccessBean;
 import dock.rob.app.dblayer.NameRequest;
+import dock.rob.app.dblayer.UpdateException;
 
 
 /**
@@ -107,18 +108,27 @@ public class NameEntryService
   {
     log.info("Recieved PUT for: " + name);
     
+    try
+    {
+      this.tableAccess.updateName(nameEntry.getId(), nameEntry.getName());
+    }
+    catch (UpdateException e)
+    {
+      log.severe(String.format("Could not update NameEntry %s with name %s", nameEntry.getId(), nameEntry.getName()));
+      
+      return Response.serverError().build();
+    }
+    
+    
     //
-    // TODO: Put update logic here
+    // Not exactly sure what the return should include here but I think I'm on
+    // the right track.
     //
     //
     //
     //
-    
-    
-    
-    
-    
-    
-    return Response.ok().build();
+    //
+    // 
+    return Response.ok(nameEntry).build();
   }
 }
