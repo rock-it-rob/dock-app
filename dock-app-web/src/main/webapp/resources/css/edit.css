@@ -65,12 +65,14 @@ table.editor td input[type=text]:focus
 
 table.editor td .edit-btn
 {
-  height: 24px;
-  width: 24px;
-  display: block;
+  height: 18px;
+  width: 18px;
+  vertical-align: middle;
   cursor: pointer;
   background-image: url("../img/pencil.svg");
   background-size: contain;
+  visibility: hidden;
+  display: inline-block;
 }
 
 table.editor td .edit-btn:hover

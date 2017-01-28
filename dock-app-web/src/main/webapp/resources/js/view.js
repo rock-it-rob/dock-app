@@ -8,18 +8,35 @@ var NameView = Backbone.View.extend({
     var name = this.model.get("name");
     var updated = this.model.get("updated");
     this.$el.empty();
-    this.$el.append("<td><span class='edit-btn'/></td><td><input class='name-box' type='text' disabled='yes' value='" + name + "'/></td>");
+    this.$el.append("<td class='name-holder'><input class='name-box' type='text' disabled='yes' value='" + name + "'/><span class='edit-btn'/></td>");
     this.$el.append("<td>" + updated + "</td>");
     
     return this;
   },
   events: {
+    "mouseover .name-holder" : "showEditButton",
+    "mouseout .name-holder" : "hideEditButton",
     "click .edit-btn" : "allowEdit",
     "keyup .name-box" : "checkEnter",
     "blur .name-box" : "updateName"
   },
+  // Shows the edit button.
+  showEditButton: function() {
+    var btn = this.$el.find(".edit-btn");
+    var focused = $(".name-box:focus");
+    if (focused.length === 0)
+    {
+      $(btn).css("visibility", "visible");
+    }
+  },
+  // Hides the edit button.
+  hideEditButton: function() {
+    var btn = this.$el.find(".edit-btn");
+    $(btn).css("visibility", "hidden");
+  },
   // This function handles the enabling of editting on the name text box.
   allowEdit: function() {
+    this.hideEditButton();
     var input = this.$el.find(".name-box");
     input.attr("disabled", false);
     input.focus();
