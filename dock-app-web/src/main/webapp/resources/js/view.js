@@ -3,13 +3,20 @@ var NameView = Backbone.View.extend({
   initialize: function() {
     this.listenTo(this.model, "sync", this.render);
     this.listenTo(this.model, "error", this.render);
+    
+    this.template = _.template(
+      "<td class='name-holder'>" +
+      "<input class='name-box' type='text' disabled='yes' value='<%= name %>'/><span class='edit-btn'/>" +
+      "</td>" +
+      "<td><%= updated %></td>"
+    );
   },
   render: function() {
     var name = this.model.get("name");
     var updated = this.model.get("updated");
     this.$el.empty();
-    this.$el.append("<td class='name-holder'><input class='name-box' type='text' disabled='yes' value='" + name + "'/><span class='edit-btn'/></td>");
-    this.$el.append("<td>" + updated + "</td>");
+    html = this.template({ name : name, updated : updated });
+    this.$el.append(html);
     
     return this;
   },
