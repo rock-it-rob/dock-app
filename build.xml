@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<project name="dock-app" basedir="." default="package">
+  
+  <property name="ear.file" value="${ant.project.name}.ear"/>
+  
+  <target name="package" depends="modules">
+    <ear
+      destfile="${ear.file}"
+    >
+      <fileset dir="dock-app-web" includes="dock-app-web.war"/>
+      <fileset dir="dock-app-ejb" includes="dock-app-ejb.jar"/>
+    </ear>
+  </target>
+  
+  <target name="modules">
+    <ant antFile="dock-app-ejb/build.xml" inheritRefs="no" inheritAll="no"/>
+    <ant antFile="dock-app-web/build.xml" inheritRefs="no" inheritAll="no"/>
+  </target>
+  
+  <target name="clean">
+    <delete file="${ear.file}"/>
+    <ant antFile="dock-app-ejb/build.xml" target="clean" inheritRefs="no" inheritAll="no"/>
+    <ant antFile="dock-app-web/build.xml" target="clean" inheritRefs="no" inheritAll="no"/>
+  </target>
+  
+</project>

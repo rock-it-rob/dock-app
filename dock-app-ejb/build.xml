@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<project name="dock-app-ejb" basedir="." default="package">
+  
+  <property environment="env"/>
+  <property name="jar.file" value="${ant.project.name}.jar"/>
+  <property name="src.dir" value="src/main/java"/>
+  
+  <path id="cp">
+    <pathelement location="${env.CATALINA_HOME}/lib/javaee-api-7.0.1.jar"/>
+  </path>
+  
+  <target name="package" depends="build">
+    <jar
+      destfile="${ear.file}"
+    >
+      <fileset dir="${src.dir}" includes="**/*.class"/>
+    </jar>
+  </target>
+  
+  <target name="build">
+    <javac
+      srcdir="${src.dir}"
+      fork="yes"
+      debug="yes"
+      listFiles="yes"
+      classpathref="cp"
+    >
+      <compilerarg value="-Xlint"/>
+    </javac>
+  </target>
+  
+  <target name="clean">
+    <delete>
+      <fileset dir="." includes="${jar.file}"/>
+      <fileset dir="${src.dir}" includes="**/*.class"/>
+    </delete>
+  </target>
+  
+</project>
