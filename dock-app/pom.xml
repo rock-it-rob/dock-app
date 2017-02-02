@@ -28,12 +28,6 @@
       <version>1.0-SNAPSHOT</version>
       <type>ejb</type>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-      <version>5.2.5.Final</version>
-    </dependency>
   </dependencies>
   
   <build>
@@ -54,10 +48,6 @@
               <groupId>dock.rob.app.dblayer</groupId>
               <artifactId>dock-app-ejb</artifactId>
             </ejbModule>
-            <jarModule>
-              <groupId>org.hibernate</groupId>
-              <artifactId>hibernate-core</artifactId>
-            </jarModule>
           </modules>
         </configuration>
       </plugin>
