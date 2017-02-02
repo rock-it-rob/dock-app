@@ -6,13 +6,13 @@
 
   <module>
     <web>
-      <web-uri>dock-app-web-1.0-SNAPSHOT.war</web-uri>
+      <web-uri>dock-app-web.war</web-uri>
       <context-root>/dockapp</context-root>
     </web>
   </module>
 
   <module>
-    <ejb>dock-app-ejb-1.0-SNAPSHOT.jar</ejb>
+    <ejb>dock-app-ejb.jar</ejb>
   </module>
 
 </application>
