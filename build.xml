@@ -6,6 +6,7 @@
   <target name="package" depends="modules">
     <ear
       destfile="${ear.file}"
+      appxml="application.xml"
     >
       <fileset dir="dock-app-web" includes="dock-app-web.war"/>
       <fileset dir="dock-app-ejb" includes="dock-app-ejb.jar"/>
