@@ -3,9 +3,11 @@
   
   <property environment="env"/>
   <property name="src.dir" value="src/main/java"/>
+  <property name="war.file" value="${ant.project.name}.war"/>
   
   <path id="cp">
-    <pathelement location="${env.CATALINA_HOME}/lib/javaee-api-7.0.1.jar"/>
+    <pathelement location="${env.CATALINA_HOME}/lib/javaee-api-7.0-1.jar"/>
+    <pathelement location="../dock-app-ejb/dock-app-ejb.jar"/>
   </path>
   
   <target name="package" depends="build">
@@ -23,6 +25,7 @@
       fork="yes"
       debug="yes"
       listFiles="yes"
+      includeAntRuntime="no"
       classpathref="cp"
     >
       <compilerarg value="-Xlint"/>
