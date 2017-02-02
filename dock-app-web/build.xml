@@ -6,7 +6,9 @@
   <property name="war.file" value="${ant.project.name}.war"/>
   
   <path id="cp">
-    <pathelement location="${env.GLASSFISH_HOME}/glassfish/lib/javaee.jar"/>
+    <pathelement location="${env.JBOSS_HOME}/modules/system/layers/base/javax/ws/rs/api/main/jboss-jaxrs-api_2.0_spec-1.0.0.Final.jar"/>
+    <pathelement location="${env.JBOSS_HOME}/modules/system/layers/base/javax/enterprise/api/main/cdi-api-1.2.jar"/>
+    <pathelement location="${env.JBOSS_HOME}/modules/system/layers/base/javax/ejb/api/main/jboss-ejb-api_3.2_spec-1.0.0.Final.jar"/>
     <pathelement location="../dock-app-ejb/dock-app-ejb.jar"/>
   </path>
   

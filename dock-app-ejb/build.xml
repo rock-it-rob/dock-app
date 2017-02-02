@@ -6,7 +6,7 @@
   <property name="src.dir" value="src/main/java"/>
   
   <path id="cp">
-    <pathelement location="${env.GLASSFISH_HOME}/glassfish/modules/javax.ejb-api.jar"/>
+    <pathelement location="${env.JBOSS_HOME}/modules/system/layers/base/javax/ejb/api/main/jboss-ejb-api_3.2_spec-1.0.0.Final.jar"/>
   </path>
   
   <target name="package" depends="build">
