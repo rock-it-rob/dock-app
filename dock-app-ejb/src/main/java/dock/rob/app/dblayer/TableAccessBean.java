@@ -3,8 +3,11 @@ package dock.rob.app.dblayer;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import java.math.BigDecimal;
+
+import javax.annotation.PostConstruct;
 
 import javax.ejb.Singleton;
 import javax.ejb.TransactionAttribute;
@@ -25,7 +28,7 @@ public class TableAccessBean
    * This collection holds a collection of data objects. It simulates a table
    * on a database.
    */
-  private ArrayList<NameRequestEntity> nameRequests;
+  private HashMap<BigDecimal, NameRequestEntity> nameRequests;
   
   /**
    * Inititalize
@@ -33,10 +36,10 @@ public class TableAccessBean
   @PostConstruct
   private void init()
   {
-    this.nameRequests = new ArrayList<NameRequestEntity>();
-    this.nameRequests.add(new NameRequestEntity(new BigDecimal(1), "Tom", new Date()));
-    this.nameRequests.add(new NameRequestEntity(new BigDecimal(2), "Dick", new Date()));
-    this.nameRequests.add(new NameRequestEntity(new BigDecimal(3), "Harry", new Date()));
+    this.nameRequests = new HashMap<BigDecimal, NameRequestEntity>();
+    this.nameRequests.put(new BigDecimal(1), new NameRequestEntity(new BigDecimal(1), "Tom", new Date()));
+    this.nameRequests.put(new BigDecimal(2), new NameRequestEntity(new BigDecimal(2), "Dick", new Date()));
+    this.nameRequests.put(new BigDecimal(3), new NameRequestEntity(new BigDecimal(3), "Harry", new Date()));
   }
   
   /**
@@ -47,7 +50,14 @@ public class TableAccessBean
   @TransactionAttribute(TransactionAttributeType.REQUIRED)
   public List<NameRequest> allNameRequests()
   {
-    return this.nameRequests;
+    ArrayList<NameRequest> names = new ArrayList<NameRequest>();
+    
+    for (NameRequestEntity nr : this.nameRequests.values())
+    {
+      names.add(nr);
+    }
+    
+    return names;
   }
   
   /**
@@ -60,22 +70,30 @@ public class TableAccessBean
    * @param id <code>BigDecimal</code> primary key of the {@ NameRequest}
    * @param name <code>String</code> new value for the name.
    * @return the updated {@ NameRequest}
+   * @throws {@ UpdateException}
    */
   @TransactionAttribute(TransactionAttributeType.REQUIRED)
-  public NameRequest updateName(BigDecimal id, String name)
+  public NameRequest updateName(BigDecimal id, String name) throws UpdateException
   {
-    NameRequestEntity nr = null;
-    
-    for (NameRequestEntity n : this.nameRequests)
+    // Prevent duplicate names.
+    for (NameRequestEntity ne : this.nameRequests.values())
     {
-      if (n.getId().equals(id))
+      if (ne.getId().equals(id)) { continue; }
+      if (ne.getName().equals(name))
       {
-        nr = n;
-        nr.setName(name);
-        nr.setUpdated(new Date());
-        break;
+        throw new UpdateException("Duplicate name entry.");
       }
     }
+    
+    NameRequestEntity nr = this.nameRequests.get(id);
+    
+    if (nr == null)
+    {
+      throw new UpdateException(id.toString() + " id not found.");
+    }
+    
+    nr.setName(name);
+    nr.setUpdated(new Date());
     
     return nr;
   }
@@ -89,13 +107,13 @@ public class TableAccessBean
   @TransactionAttribute(TransactionAttributeType.REQUIRED)
   public NameRequest getNameRequest(String name)
   {
-    NameRequestEntity result = null;
+    NameRequest result = null;
     
-    for (NameRequestEntity nr: this.nameRequests)
+    for (NameRequestEntity ne : this.nameRequests.values())
     {
-      if (nr.getName().equals(name))
+      if (ne.getName().equals(name))
       {
-        result = nr;
+        result = ne;
         break;
       }
     }

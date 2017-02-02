@@ -23,6 +23,7 @@ import javax.ws.rs.core.GenericEntity;
 import dock.rob.app.NameEntry;
 
 import dock.rob.app.dblayer.TableAccessBean;
+import dock.rob.app.dblayer.UpdateException;
 import dock.rob.app.dblayer.NameRequest;
 
 
@@ -107,10 +108,22 @@ public class NameEntryService
   {
     log.info("Recieved PUT for: " + name);
     
-    NameRequest result = this.tableAccess.updateName(nameEntry.getId(), nameEntry.getName());
+    NameRequest result = null;
+    
+    try
+    {
+      result = this.tableAccess.updateName(nameEntry.getId(), nameEntry.getName());
+    }
+    catch (UpdateException e)
+    {
+      log.severe(String.format("Could not update NameEntry %s with name %s", nameEntry.getId(), nameEntry.getName()));
+      return Response.serverError().build();
+    }
     
     log.info("Name updated at: " + result.getUpdated());
     
-    return Response.ok(result).build();
+    NameEntry ne = new NameEntry(result);
+    
+    return Response.ok(ne).build();
   }
 }
