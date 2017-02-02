@@ -24,7 +24,6 @@ import dock.rob.app.NameEntry;
 
 import dock.rob.app.dblayer.TableAccessBean;
 import dock.rob.app.dblayer.NameRequest;
-import dock.rob.app.dblayer.UpdateException;
 
 
 /**
@@ -108,19 +107,9 @@ public class NameEntryService
   {
     log.info("Recieved PUT for: " + name);
     
-    NameRequest result = null;
-    try
-    {
-      result = this.tableAccess.updateName(nameEntry.getId(), nameEntry.getName());
-      
-      log.info("Name updated at: " + result.getUpdated());
-    }
-    catch (UpdateException e)
-    {
-      log.severe(String.format("Could not update NameEntry %s with name %s", nameEntry.getId(), nameEntry.getName()));
-      
-      return Response.serverError().build();
-    }
+    NameRequest result = this.tableAccess.updateName(nameEntry.getId(), nameEntry.getName());
+    
+    log.info("Name updated at: " + result.getUpdated());
     
     return Response.ok(result).build();
   }

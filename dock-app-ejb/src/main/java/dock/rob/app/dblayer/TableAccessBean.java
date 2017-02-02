@@ -6,82 +6,75 @@ import java.util.ArrayList;
 
 import java.math.BigDecimal;
 
-import javax.annotation.Resource;
-
-import javax.ejb.Stateless;
+import javax.ejb.Singleton;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.ejb.EJBContext;
-
-import javax.persistence.PersistenceContext;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.PersistenceException;
 
 import dock.rob.app.dblayer.orm.NameRequestEntity;
 
 
 /**
- * <code>TableAccessBean</code> is a simple EJB for accessing persistence
- * objects.
+ * <code>TableAccessBean</code> is a simple EJB for accessing data objects.
  *
  * @author Rob Benton
  */
-@Stateless
+@Singleton
 public class TableAccessBean
 {
-  @PersistenceContext(unitName="dblayer-unit")
-  private EntityManager entityManager;
-  
-  @Resource
-  private EJBContext ejbContext;
+  /**
+   * This collection holds a collection of data objects. It simulates a table
+   * on a database.
+   */
+  private ArrayList<NameRequestEntity> nameRequests;
   
   /**
-   * Gets all records from the name request table.
+   * Inititalize
+   */
+  @PostConstruct
+  private void init()
+  {
+    this.nameRequests = new ArrayList<NameRequestEntity>();
+    this.nameRequests.add(new NameRequestEntity(new BigDecimal(1), "Tom", new Date()));
+    this.nameRequests.add(new NameRequestEntity(new BigDecimal(2), "Dick", new Date()));
+    this.nameRequests.add(new NameRequestEntity(new BigDecimal(3), "Harry", new Date()));
+  }
+  
+  /**
+   * Gets all records.
    *
    * @return a List of {@ NameRequest}s
    */
   @TransactionAttribute(TransactionAttributeType.REQUIRED)
   public List<NameRequest> allNameRequests()
   {
-    ArrayList<NameRequest> names = new ArrayList<NameRequest>();
-    TypedQuery<NameRequestEntity> query = this.entityManager.createNamedQuery("allNameRequests", NameRequestEntity.class);
-    for (NameRequestEntity nr : query.getResultList())
-    {
-      names.add(nr);
-    }
-    
-    return names;
+    return this.nameRequests;
   }
   
   /**
    * Updates the name on a {@ NameRequest}.
    *
    * <p>
-   * The provided {@ NameRequest} is looked up by its id and its name, and
+   * The provided {@ NameRequest} is looked up by its id and then its name and
    * update timestamp are updated.
    *
    * @param id <code>BigDecimal</code> primary key of the {@ NameRequest}
    * @param name <code>String</code> new value for the name.
    * @return the updated {@ NameRequest}
-   * @throws {@ UpdateException} if the name could not be updated.
    */
   @TransactionAttribute(TransactionAttributeType.REQUIRED)
-  public NameRequest updateName(BigDecimal id, String name) throws UpdateException
+  public NameRequest updateName(BigDecimal id, String name)
   {
     NameRequestEntity nr = null;
     
-    try
+    for (NameRequestEntity n : this.nameRequests)
     {
-      nr = this.entityManager.find(NameRequestEntity.class, id);
-      nr.setName(name);
-      nr.setUpdated(new Date());
-      this.entityManager.flush();  
-    }
-    catch (PersistenceException e)
-    {
-      this.ejbContext.setRollbackOnly();
-      throw new UpdateException(e);
+      if (n.getId().equals(id))
+      {
+        nr = n;
+        nr.setName(name);
+        nr.setUpdated(new Date());
+        break;
+      }
     }
     
     return nr;
@@ -96,12 +89,17 @@ public class TableAccessBean
   @TransactionAttribute(TransactionAttributeType.REQUIRED)
   public NameRequest getNameRequest(String name)
   {
-    TypedQuery<NameRequestEntity> query = this.entityManager.createNamedQuery("NameRequestByName", NameRequestEntity.class);
-    query.setParameter("name", name);
-    List<NameRequestEntity> result = query.getResultList();
-    NameRequestEntity nr = null;
-    if (result.size() == 1) { nr = result.get(0); }
+    NameRequestEntity result = null;
     
-    return nr;
+    for (NameRequestEntity nr: this.nameRequests)
+    {
+      if (nr.getName().equals(name))
+      {
+        result = nr;
+        break;
+      }
+    }
+    
+    return result;
   }
 }

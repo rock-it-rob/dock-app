@@ -4,46 +4,28 @@ import java.math.BigDecimal;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.GenerationType;
-
 import dock.rob.app.dblayer.NameRequest;
 
 
 /**
- * <code>NameRequest</code> is an entity class to the name request table.
+ * <code>NameRequest</code> is an data class.
  *
  * @author Rob Benton
  */
-@Entity
-@Table(name="namerequest", schema="rob")
-@SequenceGenerator(name="IdGenerator", schema="rob")
-@NamedQueries({
-  @NamedQuery(name="allNameRequests", query="select n from NameRequestEntity n"),
-  @NamedQuery(name="NameRequestByName", query="select n from NameRequestEntity n where name = :name")
-})
 public class NameRequestEntity implements NameRequest
 {
-  @Id
-  @GeneratedValue(strategy=GenerationType.TABLE, generator="IdGenerator")
-  private BigDecimal id;
-  
+  private BigDecimal id; // primary key
   private String name;
-  
-  @Temporal(TemporalType.TIMESTAMP)
   private Date updated;
   
   /**
    */
-  public NameRequestEntity() {}
+  public NameRequestEntity(BigDecimal id, String name, Date updated)
+  {
+    this.id = id;
+    this.name = name;
+    this.updated = updated;
+  }
   
   @Override
   public BigDecimal getId() { return this.id; }

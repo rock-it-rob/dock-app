@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 
 
 /**
- * <code>NameRequest</code> is an interface describing the model for a record
- * from the namerequest table.
+ * <code>NameRequest</code> is an interface describing the model for a
+ * {@ NameRequestEntity}.
  *
  * @author Rob Benton
  */
