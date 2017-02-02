@@ -1,6 +1,6 @@
-# Docker Web Application
+# Sample Web Application
 
-*Created by: Rob*
+*Created by: Rob Benton*
 
 ## Purpose
 
