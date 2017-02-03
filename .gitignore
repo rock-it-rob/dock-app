@@ -1,10 +1,7 @@
-dock-app-web/target/
-dock-app-ejb/target/
-dock-app/target/
+dock-app.ear
+dock-app-web/dock-app-web.war
+dock-app-ejb/dock-app-ejb.jar
 .DS_Store
-images/app/glassfish-4.1.1-web.zip
-images/app/jre-8u112-linux-x64.tar.gz
-images/app/dock-app-1.0-SNAPSHOT.ear
 .metadata
 bin/
 tmp/
@@ -20,5 +17,4 @@ local.properties
 *.launch
 .classpath
 .settings
-*.ear
-*.war
+*.class
