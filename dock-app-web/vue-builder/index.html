@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>vue-builder-test</title>
+  </head>
+  <body>
+    <!-- <div id="app"></div> -->
+    <div id="app" class="container">
+      <editable :initial="msg" :on-edit="saveMsg">{{msg}}</editable>And stuff
+
+      <multiselect v-bind:options='options' v-model="lobs"></multiselect>
+      <client-table :row-info-list="testRows" :header-info-list="testCols"></client-table>
+      <alert v-model="showErrorAlert" placement="top" duration="3000" type="danger" width="400px" dismissable>
+        <strong>Update not performed</strong>
+        <p>There was an issue processing your request</p>
+      </alert>
+
+      <button type="button" @click="showErrorAlert = true" class="btn btn-danger">Show Alert</button>
+    </div>
+
+    <script src="/dockapp/resources/js/vue-bundle.js"></script>
+    <script>
+      var app = new Vue({
+        el:'#app',
+        methods:{
+          saveMsg:function(val){
+            this.msg = val;
+          },
+          log:function(val){
+            console.log(val);
+          }
+        },
+        created:function(){
+          setTimeout(function(){
+            app.testRows = [[1,2,3]];
+          },0);
+        },
+        data:{
+          msg:'here goes vue',
+          showErrorAlert:false,
+          lobs:[],
+          testCols:[{value:1, editFunction:console.log},{value:2},{value:3}],
+          testRows:[],
+          options:[{label:'AHIN',value:'AHIN'},
+  				{label:'AO',value:'AO'},
+  				{label:'ARCAID',value:'ARCAID'},
+  				{label:'BAA',value:'BAA'},
+  				{label:'BAWM',value:'BAWM'},
+  				{label:'BCBSREG',value:'BCBSREG'},
+  				{label:'BC_MDPK',value:'BC_MDPK'},
+  				{label:'BX',value:'BX'},
+  				{label:'BCBSSH',value:'BCBSSH'},
+  				{label:'BCBSX',value:'BCBSX'},
+  				{label:'COMM',value:'COMM'},
+  				{label:'EDI',value:'EDI'},
+  				{label:'FEP',value:'FEP'},
+  				{label:'FILENET',value:'FILENET'},
+  				{label:'HA',value:'HA'},
+  				{label:'ITS',value:'ITS'},
+  				{label:'MEDA',value:'MEDA'},
+  				{label:'MEDB',value:'MEDB'},
+  				{label:'MCBRR',value:'MCBRR'},
+  				{label:'MPA',value:'MPA'},
+  				{label:'PPORTAL',value:'PPORTAL'},
+  				{label:'PROVIDERS',value:'PROVIDERS'},
+  				{label:'TYSN',value:'TYSN'},
+  				{label:'USAA',value:'USAA'},
+  				{label:'USAL',value:'USAL'}]
+        }
+      })
+    </script>
+  </body>
+</html>
